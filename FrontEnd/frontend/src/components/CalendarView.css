@@ -1,0 +1,42 @@
+.calendar-container {
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #D9D7F1;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h3 {
+    color: #D77FA1;
+  }
+  
+  /* Asegura que todos los números se muestren claramente */
+  .react-calendar__tile {
+    background-color: #FFF9F9;
+    color: #4a4a4a; /* Color base para los números */
+    font-size: 16px; /* Ajuste del tamaño de los números */
+    border-radius: 4px;
+  }
+  
+  /* Cambiar el color del texto en los días seleccionados */
+  .react-calendar__tile--active {
+    background-color: #D77FA1 !important;
+    color: white !important;
+  }
+  
+  /* Asegura que los días del calendario no aparezcan en rojo */
+  .react-calendar__tile abbr {
+    color: inherit !important;
+  }
+  
+  /* Ajusta el hover para los días */
+  .react-calendar__tile:hover {
+    background-color: #FFFDDE;
+  }
+  
+  /* Días que no pertenecen al mes actual */
+  .react-calendar__tile--now {
+    background-color: #E7FBBE !important; /* Día actual resaltado */
+    color: #4a4a4a;
+  }

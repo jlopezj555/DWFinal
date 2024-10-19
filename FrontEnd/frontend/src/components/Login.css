@@ -1,0 +1,28 @@
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #D6E5FA; /* Fondo del contenedor de login */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    color: #D77FA1; /* Color del título de login */
+  }
+  
+  input {
+    padding: 10px;
+    border: 1px solid #BAABDA;
+    border-radius: 4px;
+    margin-bottom: 15px;
+  }
+  
+  button {
+    background-color: #D77FA1;
+    color: white;
+  }
+  
+  button:hover {
+    background-color: #BAABDA; /* Hover del botón */
+  }

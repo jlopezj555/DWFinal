@@ -1,0 +1,22 @@
+[{
+  "_id": {
+    "$oid": "670f2c12db774d8d48cb6d6b"
+  },
+  "usuario_id": "ID_DEL_USUARIO",
+  "espacio_id": "ID_DEL_ESPACIO",
+  "fecha_reserva": "2024-10-18T00:00:00Z",
+  "hora_inicio": "2024-10-18T09:00:00Z",
+  "hora_fin": "2024-10-18T12:00:00Z",
+  "estado": "confirmada"
+},
+{
+  "_id": {
+    "$oid": "670f2cb2db774d8d48cb6d79"
+  },
+  "usuario_id": "ID_DEL_USUARIO",
+  "espacio_id": "ID_DEL_ESPACIO",
+  "fecha_reserva": "2024-10-19T00:00:00Z",
+  "hora_inicio": "2024-10-19T10:00:00Z",
+  "hora_fin": "2024-10-19T14:00:00Z",
+  "estado": "confirmada"
+}]
