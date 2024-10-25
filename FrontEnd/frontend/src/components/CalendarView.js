@@ -1,20 +1,56 @@
 import React, { useState } from 'react';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+import { Calendar, momentLocalizer } from 'react-big-calendar';
+import moment from 'moment';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './CalendarView.css';
 
-const CalendarView = () => {
-  const [date, setDate] = useState(new Date());
+const localizer = momentLocalizer(moment);
 
-  const onChange = (newDate) => {
-    setDate(newDate);
+const CalendarView = () => {
+  const [events, setEvents] = useState([
+    {
+      title: 'Reunión de equipo',
+      start: new Date(2024, 9, 27, 10, 0), // Año, mes (0-11), día, hora, minuto
+      end: new Date(2024, 9, 27, 11, 0),
+    },
+    {
+      title: 'Cita médica',
+      start: new Date(2024, 9, 29, 14, 0),
+      end: new Date(2024, 9, 29, 15, 0),
+    },
+  ]);
+
+  const handleSelectEvent = (event) => {
+    alert(`Título: ${event.title}`);
+  };
+
+  const handleSelectSlot = (slotInfo) => {
+    const title = window.prompt('Nuevo evento:');
+    if (title) {
+      setEvents((prevEvents) => [
+        ...prevEvents,
+        {
+          title,
+          start: slotInfo.start,
+          end: slotInfo.end,
+        },
+      ]);
+    }
   };
 
   return (
     <div className="calendar-container">
-      <h3>Seleccione una Fecha</h3>
-      <Calendar onChange={onChange} value={date} />
-      <p>Fecha seleccionada: {date.toDateString()}</p>
+      <h3>Calendario de Eventos</h3>
+      <Calendar
+        localizer={localizer}
+        events={events}
+        startAccessor="start"
+        endAccessor="end"
+        style={{ height: 500, margin: '50px' }}
+        selectable
+        onSelectEvent={handleSelectEvent}
+        onSelectSlot={handleSelectSlot}
+      />
     </div>
   );
 };

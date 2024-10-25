@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
 import './Login.css';
 
-const Login = () => {
+const Login = ({ onLogin }) => {  // Recibe la función onLogin como prop
   const [formData, setFormData] = useState({ username: '', password: '' });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(`Bienvenido ${formData.username}`);
+    // Aquí puedes agregar la lógica de autenticación
+    
+    if (formData.username === 'admin' && formData.password === '12345') {
+      alert(`Bienvenido ${formData.username}`);
+      onLogin();  // Llama a la función de onLogin cuando el usuario inicia sesión
+    } else {
+      alert('Credenciales incorrectas');
+    }
   };
 
   return (
@@ -36,3 +43,4 @@ const Login = () => {
 };
 
 export default Login;
+

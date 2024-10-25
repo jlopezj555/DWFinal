@@ -1,0 +1,38 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f4f4f9;
+    padding: 10px 20px;
+    box-shadow: 0 9px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .left-section {
+    flex: 1;
+  }
+  
+  .role-selector {
+    padding: 5px;
+    font-size: 21px;
+    border-radius: 14px;
+  }
+  
+  .center-section {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .header-option {
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: #7069b6;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .header-option:hover {
+    background-color: #d471b9;
+  }

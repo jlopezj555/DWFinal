@@ -5,26 +5,54 @@ import CalendarView from './components/CalendarView';
 import Filter from './components/Filter';
 import AdminPanel from './components/AdminPanel';
 import Historial from './components/Historial';
+import Header from './components/Header';
+import FooterActions from './components/FooterActions'; // Importa FooterActions
 
 function App() {
-  const [filter, setFilter] = useState({});
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentView, setCurrentView] = useState('calendar');
+  const [role, setRole] = useState('user');
 
-  const handleFilterChange = (newFilter) => {
-    setFilter(newFilter);
-    console.log("Filtro Aplicado: ", newFilter);
+  const handleLogin = () => {
+    setIsAuthenticated(true);
+  };
+
+  const handleRoleChange = (newRole) => {
+    setRole(newRole);
+    console.log("Rol seleccionado:", newRole);
+  };
+
+  const handleViewChange = (view) => {
+    setCurrentView(view);
+  };
+
+  const handleSave = () => {
+    // Lógica para guardar datos
+    console.log("Datos guardados");
+  };
+
+  const handleDelete = () => {
+    // Lógica para eliminar datos
+    console.log("Datos eliminados");
   };
 
   return (
     <div className="App">
       <h1>Sistema de Reservas</h1>
-      <Login />
-      <Filter onFilterChange={handleFilterChange} />
-      <CalendarView />
-      <AdminPanel />
-      <Historial />
+      {!isAuthenticated ? (
+        <Login onLogin={handleLogin} />
+      ) : (
+        <>
+          <Header onRoleChange={handleRoleChange} onViewChange={handleViewChange} />
+          <Filter onFilterChange={(newFilter) => console.log("Filtro Aplicado: ", newFilter)} />
+          {currentView === 'calendar' && <CalendarView />}
+          {currentView === 'adminPanel' && role === 'admin' && <AdminPanel />}
+          {currentView === 'historial' && <Historial />}
+          <FooterActions onSave={handleSave} onDelete={handleDelete} /> {/* Añade FooterActions aquí */}
+        </>
+      )}
     </div>
   );
 }
-//LOS COMPONENTES DEBEN LLAMARSE SECUENCIALMENTE
-//PRIMERO EL LOGIN Y AL ENTRAR SE VEN TODOS LOS DEMÁS POSICIONADOS CORRECTAMENTE
+
 export default App;
