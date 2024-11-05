@@ -1,0 +1,12 @@
+[{
+  "_id": "ObjectId",
+  "nombre": "Juan Pérez",
+  "email": "juan.perez@example.com",
+  "contraseña": "hashedpassword123",
+  "rol": "usuario",
+  "fecha_creacion": "2024-11-05T00:00:00Z",
+  "historial_reservas": [
+    "ID_DE_RESERVA_1",
+    "ID_DE_RESERVA_2"
+  ]
+}]

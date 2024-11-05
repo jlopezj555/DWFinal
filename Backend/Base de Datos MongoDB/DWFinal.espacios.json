@@ -1,0 +1,26 @@
+[{
+  "_id": "ObjectId",
+  "tipo_espacio": "Oficina",
+  "capacidad": 5,
+  "ubicacion": "Piso 3, Oficina 301",
+  "disponibilidad_horaria": [
+    {
+      "fecha": "2024-11-06T00:00:00Z",
+      "hora_inicio": "2024-11-06T09:00:00Z",
+      "hora_fin": "2024-11-06T17:00:00Z"
+    }
+  ],
+  "reservas": [],
+  "comentarios": [
+    {
+      "usuario_id": "ID_DEL_USUARIO",
+      "texto": "El espacio es muy cómodo y bien iluminado.",
+      "fecha_comentario": "2024-11-05T00:00:00Z"
+    },
+    {
+      "usuario_id": "ID_DEL_USUARIO_2",
+      "texto": "Me gustaría que hubiera más sillas.",
+      "fecha_comentario": "2024-11-05T00:00:00Z"
+    }
+  ]
+}]
