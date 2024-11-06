@@ -4,7 +4,7 @@ const reservaController = require('../controllers/reserva.controller');
 const { authMiddleware, adminMiddleware } = require('../middleware/auth');
 
 // Crear una nueva reserva
-router.post('/CrearReserva',  authMiddleware, reservaController.crearReserva);
+router.post('/CrearReserva', authMiddleware, reservaController.crearReserva);
 
 // Obtener todas las reservas
 router.get('/ObtenerReservas',  authMiddleware, adminMiddleware, reservaController.obtenerReservas);
@@ -17,5 +17,9 @@ router.put('/ActReserva/:id', authMiddleware, reservaController.actualizarReserv
 
 // Eliminar una reserva
 router.delete('/EliminarReserva/:id', authMiddleware, reservaController.eliminarReserva);
+
+// Obtener una reserva por ID solo para el usuario autenticado
+router.get('/ObtReservaUsuario/:id', authMiddleware, reservaController.obtenerReservaUsuario);
+
 
 module.exports = router;
