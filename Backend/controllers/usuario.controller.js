@@ -1,6 +1,9 @@
+// usuario.controller.js
+
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const Usuario = require('../models/usuario.model');
+const SECRET_KEY = 'mysecretkey';
 
 // Autenticación (login)
 exports.loginUsuario = async (req, res) => {
@@ -19,19 +22,21 @@ exports.loginUsuario = async (req, res) => {
       return res.status(401).json({ mensaje: 'Contraseña incorrecta' });
     }
 
-    // Si las contraseñas coinciden, generar un JWT
+    // Generar un JWT con el rol
     const token = jwt.sign(
       { id: usuario._id, rol: usuario.rol },
-      'mysecretkey', // Reemplaza esto con tu clave secreta (puedes usar una variable de entorno)
-      { expiresIn: '1h' } // El token expirará en 1 hora
+      SECRET_KEY,
+      { expiresIn: '1h' }
     );
 
-    // Enviar el token en la respuesta
-    res.json({ token });
+    // Enviar el token, nombre y rol del usuario en la respuesta
+    res.json({ token, nombre: usuario.nombre, rol: usuario.rol });
   } catch (error) {
     res.status(500).json({ mensaje: 'Error en el servidor' });
   }
 };
+
+
 
 
 // Crear un nuevo usuario
@@ -43,10 +48,15 @@ exports.crearUsuario = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(contraseña, salt);
 
+    // Crear el nuevo usuario con la contraseña encriptada
     const usuario = new Usuario({ ...req.body, contraseña: hashedPassword });
 
+    // Guardar el usuario en la base de datos
     await usuario.save();
-    res.status(201).json(usuario);
+
+    // Responder con el usuario creado (excluyendo la contraseña para seguridad)
+    const { contraseña: _, ...usuarioSinContraseña } = usuario.toObject();
+    res.status(201).json(usuarioSinContraseña);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

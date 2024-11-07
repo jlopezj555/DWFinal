@@ -1,3 +1,4 @@
+
 .calendar-container {
   max-width: 800px;
   margin: 30px auto;
@@ -5,43 +6,98 @@
   background-color: #D9D7F1;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
-h3 {
+.calendar-container h3 {
   color: #D77FA1;
+  margin-bottom: 20px;
 }
-  
-  h3 {
-    color: #D77FA1;
-  }
-  
-  /* Asegura que todos los números se muestren claramente */
-  .react-calendar__tile {
-    background-color: #FFF9F9;
-    color: #4a4a4a; /* Color base para los números */
-    font-size: 16px; /* Ajuste del tamaño de los números */
-    border-radius: 4px;
-  }
-  
-  /* Cambiar el color del texto en los días seleccionados */
-  .react-calendar__tile--active {
-    background-color: #D77FA1 !important;
-    color: white !important;
-  }
-  
-  /* Asegura que los días del calendario no aparezcan en rojo */
-  .react-calendar__tile abbr {
-    color: inherit !important;
-  }
-  
-  /* Ajusta el hover para los días */
-  .react-calendar__tile:hover {
-    background-color: #FFFDDE;
-  }
-  
-  /* Días que no pertenecen al mes actual */
-  .react-calendar__tile--now {
-    background-color: #E7FBBE !important; /* Día actual resaltado */
-    color: #4a4a4a;
-  }
-  
+
+/* Contenedor principal del calendario */
+.rbc-calendar {
+  background-color: #FFF9F9;
+  border-radius: 8px;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+/* Barra de navegación del calendario */
+.rbc-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #D77FA1;
+  color: white;
+  padding: 10px;
+  border-radius: 8px 8px 0 0;
+}
+
+/* Estilo para los botones de navegación */
+.rbc-toolbar button {
+  background-color: #D77FA1;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin: 0 5px;
+}
+
+.rbc-toolbar button:hover {
+  background-color: #BAABDA;
+}
+
+/* Título del mes o vista actual en el centro de la barra de navegación */
+.rbc-toolbar-label {
+  font-size: 16px;
+  font-weight: bold;
+  flex-grow: 2;
+  text-align: center;
+}
+
+/* Estilo para los días de la semana (Sun, Mon, etc.) */
+.rbc-header {
+  color: #4a4a4a;
+  font-weight: bold;
+  background-color: #FFFDDE;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Fondo de cada celda de día */
+.rbc-day-bg {
+  background-color: #FFF9F9;
+  border: 1px solid #eee;
+}
+
+/* Día actual resaltado */
+.rbc-today {
+  background-color: #E7FBBE !important;
+}
+
+/* Estilo para los eventos dentro del calendario */
+.rbc-event {
+  background-color: #D77FA1;
+  color: white;
+  padding: 5px;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.rbc-event:hover {
+  background-color: #BAABDA;
+}
+
+/* Hover en las celdas de día */
+.rbc-day-bg:hover {
+  background-color: #FFFDDE;
+}
+
+/* Ajustes para la vista mensual, semanal y diaria */
+.rbc-month-view, .rbc-week-view, .rbc-day-view {
+  padding: 10px;
+  border-radius: 8px;
+}

@@ -22,7 +22,7 @@ const CalendarView = () => {
 
   const handleSelectEvent = (event) => {
     alert(`Título: ${event.title}`);
-  };
+};
 
   const handleSelectSlot = (slotInfo) => {
     const title = window.prompt('Nuevo evento:');
