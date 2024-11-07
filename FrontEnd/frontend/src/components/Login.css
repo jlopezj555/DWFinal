@@ -1,28 +1,60 @@
-.login-container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #D6E5FA; /* Fondo del contenedor de login */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  h2 {
-    color: #D77FA1; /* Color del título de login */
-  }
-  
-  input {
-    padding: 10px;
-    border: 1px solid #BAABDA;
-    border-radius: 4px;
-    margin-bottom: 15px;
-  }
-  
-  button {
-    background-color: #D77FA1;
-    color: white;
-  }
-  
-  button:hover {
-    background-color: #BAABDA; /* Hover del botón */
-  }
+/* Login.css */
+
+.login-containerL {
+  max-width: 400px;
+  margin: 100px auto 50px; /* Ajusta el espacio superior e inferior aquí */
+  padding: 20px;
+  background-color: #D6E5FA; /* Fondo del contenedor */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login-container h2 {
+  color: #D77FA1;
+  text-align: center;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #BAABDA;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+
+.login-container button {
+  width: 100%;
+  padding: 10px;
+  background-color: #D77FA1;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #BAABDA; /* Hover del botón */
+}
+
+/* Botón para alternar entre login y registro */
+.toggle-button {
+  margin-top: 10px;
+  background-color: transparent;
+  color: #D77FA1;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.toggle-button:hover {
+  color: #BAABDA;
+}
+
+.welcome-message {
+  color: #4a90e2;
+  font-size: 16px;
+  margin-top: 10px;
+}

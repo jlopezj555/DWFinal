@@ -22,3 +22,8 @@
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
+  /* Estilos para deshabilitar el cuadro de filtro */
+.filtro-container.disabled {
+  opacity: 0.5; /* Hace que el filtro se vea atenuado */
+  pointer-events: none; /* Evita interacciones con el filtro */
+}

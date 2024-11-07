@@ -1,0 +1,41 @@
+/* CrearUsuario.css */
+
+.crear-usuario-form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .crear-usuario-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .crear-usuario-form input,
+  .crear-usuario-form select {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .crear-usuario-form button {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #D77FA1;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .crear-usuario-form button:hover {
+    background-color: #D77FA1;
+  }
+  
