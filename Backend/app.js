@@ -7,7 +7,7 @@ const cors = require('cors');
 
 //Unión del Frontend y el Backend
 app.use(cors({
-  origin: 'http://localhost:3000', // Reemplaza con la URL del frontend
+  origin: 'http://localhost:3000', 
   methods: 'GET,POST,PUT,DELETE',
   credentials: true,
 }));
@@ -16,7 +16,7 @@ app.use(cors({
 app.use(express.json());
 
 // Rutas
-app.use('/api', routes); // Agrega el prefijo '/api' para todas las rutas
+app.use('/api', routes);
 
 //Conexión a MongoDB
 mongoose.connect('mongodb://127.0.0.1:27017/DWFinal').then(()=>{

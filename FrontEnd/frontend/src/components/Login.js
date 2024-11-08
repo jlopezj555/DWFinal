@@ -20,8 +20,12 @@ const Login = ({ onLogin }) => {
           contraseña: formData.password,
         });
 
-        // Extrae el nombre y rol del usuario desde la respuesta y llama a onLogin
-        const { nombre, rol } = response.data;
+        // Extrae el nombre, rol y token del usuario desde la respuesta
+        const { nombre, rol, token } = response.data;
+        
+        // Guarda el token en localStorage para futuras peticiones
+        localStorage.setItem('token', token);
+        
         setNombreUsuario(nombre);
         setError('');
 
@@ -83,3 +87,4 @@ const Login = ({ onLogin }) => {
 };
 
 export default Login;
+

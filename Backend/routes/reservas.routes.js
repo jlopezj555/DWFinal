@@ -22,4 +22,5 @@ router.delete('/EliminarReserva/:id', authMiddleware, reservaController.eliminar
 router.get('/ObtReservaUsuario/:id', authMiddleware, reservaController.obtenerReservaUsuario);
 
 
+
 module.exports = router;
