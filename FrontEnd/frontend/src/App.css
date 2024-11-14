@@ -5,6 +5,106 @@
   font-family: 'Arial', sans-serif;
 }
 
+/* Estilo para el mensaje de bienvenida */
+h2{
+  position: absolute; /* Posiciona el mensaje con respecto a su contenedor */
+  top: 70px; /* Ajusta la posición vertical justo debajo del header */
+  left: 50%; /* Centrado horizontalmente */
+  transform: translateX(-50%); /* Centrado exacto */
+  text-align: center;
+  color: white;
+  font-size: 1.5rem; /* Tamaño mediano */
+  font-weight: normal; /* Normal para mayor suavidad */
+  background-color: rgba(0, 0, 0, 0.6); /* Fondo oscuro para resaltar el texto */
+  padding: 15px;
+  border-radius: 8px;
+  z-index: 10; /* Asegura que el mensaje esté encima del contenido */
+}
+
+
+/* Ajusta el fondo para la pantalla cuando el administrador está logueado */
+.logged-in-background {
+  background-image: url('../public/fondo2.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Asegura que el contenido no se quede al centro */
+  align-items: center;
+}
+
+/* Fondo para la pantalla de Login */
+.login-background {
+  background-image: url('../public/login.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Header siempre en la parte superior cubriendo todo el ancho */
+header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #333; /* Color de fondo del Header */
+  padding: 10px 0;
+  z-index: 20; /* Asegura que el Header esté por encima del contenido */
+}
+
+
+
+
+
+
+/* Estilos para el Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f4f4f9;
+  padding: 10px 20px;
+  box-shadow: 0 9px 6px rgba(0, 0, 0, 0.1);
+  position: relative; /* Asegura que el header no se vea afectado por el fondo */
+  z-index: 10; /* Asegura que el header quede encima del fondo */
+}
+
+.left-section {
+  flex: 1;
+}
+
+.role-selector {
+  padding: 5px;
+  font-size: 21px;
+  border-radius: 14px;
+}
+
+.center-section {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.header-option {
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #7069b6;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.header-option:hover {
+  background-color: #d471b9;
+}
+
+
+
 h1 {
   color: #D77FA1; /* Color del título principal */
 }

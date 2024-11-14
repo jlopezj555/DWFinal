@@ -1,21 +1,37 @@
-// Header.js
 import React from 'react';
-import './Header.css';
 import { Link } from 'react-router-dom';
+import './Header.css';
 
-const Header = ({ role }) => {
+const Header = ({ role, onLogout }) => {
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    onLogout();
+    window.location.reload();
+  };
+
   return (
     <header className="header">
       <div className="center-section">
         <Link to="/" className="header-option">Realizar Reserva</Link>
         {/* Mostrar Panel de Administración solo para el rol de administrador */}
         {role === 'administrador' && (
-          <Link to="/admin" className="header-option">Panel de Administración</Link>
+          <Link to="/admin" className="header-option">Administrar Reservas</Link>
         )}
-        <Link to="/historial" className="header-option">Historial de Reservas</Link>
+        {role === 'usuario' && (
+          <Link to="/historial" className="header-option">Historial de Reservas</Link>
+        )}
+        
       </div>
+
+      {localStorage.getItem('token') && (
+        <button className="logout-button" onClick={handleLogout}>
+          Cerrar sesión
+        </button>
+      )}
     </header>
   );
 };
 
 export default Header;
+
+

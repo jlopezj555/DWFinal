@@ -34,9 +34,9 @@ const Login = ({ onLogin }) => {
 
       } catch (error) {
         if (error.response && error.response.status === 404) {
-          setError('Usuario no encontrado');
+          setError('Usuario/Contraseña incorrecta');
         } else if (error.response && error.response.status === 401) {
-          setError('Contraseña incorrecta');
+          setError('Usuario/Contraseña incorrecta');
         } else {
           setError('Error al iniciar sesión. Inténtalo de nuevo.');
         }
@@ -76,7 +76,7 @@ const Login = ({ onLogin }) => {
             ¿No tienes cuenta? Regístrate
           </button>
         </div>
-      )}
+      )}<br></br>
       {isRegister && (
         <button onClick={() => setIsRegister(false)}>
           ¿Ya tienes una cuenta? Inicia sesión
