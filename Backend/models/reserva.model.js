@@ -3,12 +3,12 @@ const mongoose = require('mongoose');
 const reservaSchema = new mongoose.Schema({
   usuario_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Usuario', // Referencia a la colección de usuarios
+    ref: 'Usuario',
     required: true,
   },
   espacio_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Espacio', // Referencia a la colección de espacios
+    ref: 'Espacio',
     required: true,
   },
   fecha_reserva: {
@@ -16,11 +16,11 @@ const reservaSchema = new mongoose.Schema({
     required: true,
   },
   hora_inicio: {
-    type: Date,
+    type: String,  // Tipo String
     required: true,
   },
   hora_fin: {
-    type: Date,
+    type: String,  // Tipo String
     required: true,
   },
   estado: {
@@ -31,3 +31,4 @@ const reservaSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Reserva', reservaSchema);
+

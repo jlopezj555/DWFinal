@@ -56,13 +56,17 @@ exports.obtenerReservaPorId = async (req, res) => {
 };
 
 
-// Actualizar una reserva
 exports.actualizarReserva = async (req, res) => {
   try {
     const { fecha_reserva, hora_inicio, hora_fin, estado } = req.body;
     const reservaActualizada = await Reserva.findByIdAndUpdate(
       req.params.id,
-      { fecha_reserva, hora_inicio, hora_fin, estado },
+      { 
+        fecha_reserva: new Date(fecha_reserva).toISOString(),
+        hora_inicio: new Date(`1970-01-01T${hora_inicio}`).toISOString(),
+        hora_fin: new Date(`1970-01-01T${hora_fin}`).toISOString(),
+        estado 
+      },
       { new: true }
     );
 
@@ -72,6 +76,7 @@ exports.actualizarReserva = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 
 // Eliminar una reserva

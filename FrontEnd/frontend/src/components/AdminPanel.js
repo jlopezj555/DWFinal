@@ -37,10 +37,7 @@ const AdminPanel = ({ onExit }) => {
     fetchReservas();
   }, []);
 
-  const handleBackToHome = () => {
-    onExit();
-    navigate('/');
-  };
+
 
   const toggleActionButtons = (reservaId) => {
     setSelectedReservaId(selectedReservaId === reservaId ? null : reservaId);
@@ -63,33 +60,32 @@ const AdminPanel = ({ onExit }) => {
 
   const handleEditarReserva = (reserva) => {
     setEditData({
-      fecha_reserva: reserva.fecha_reserva,
-      hora_inicio: reserva.hora_inicio,
-      hora_fin: reserva.hora_fin,
-      estado: reserva.estado
+      fecha_reserva: reserva.fecha_reserva.split('T')[0], // formato YYYY-MM-DD
+      hora_inicio: reserva.hora_inicio.slice(0, 5), // formato HH:mm
+      hora_fin: reserva.hora_fin.slice(0, 5),       // formato HH:mm
+      estado: reserva.estado,
     });
     setSelectedReservaId(reserva._id);
     setShowEditForm(true);
   };
+  
 
   const handleSubmitEdit = async () => {
     try {
       const token = localStorage.getItem('token');
   
-      // Crear un objeto con los datos editados
+      // Crea un objeto `editedReserva` que conserva los valores originales de usuario_id, espacio_id y email
       const editedReserva = {
         ...editData,
-        // Convierte fecha_reserva a formato ISO
-        fecha_reserva: new Date(editData.fecha_reserva).toISOString(),  // Formato ISO para la fecha
-        // Asegúrate de que las horas estén también en formato adecuado (solo hora)
-        hora_inicio: new Date(`1970-01-01T${editData.hora_inicio}:00`).toISOString(), // Convierte hora_inicio
-        hora_fin: new Date(`1970-01-01T${editData.hora_fin}:00`).toISOString(), // Convierte hora_fin
-        usuario_id: editData.usuario_id,  // No borres estos campos
-        email: editData.email // Asegúrate de mantenerlos también
+        // No modificamos usuario_id, espacio_id ni email, ya que queremos que esos valores se mantengan igual
+        fecha_reserva: new Date(editData.fecha_reserva).toISOString(),
+        hora_inicio: editData.hora_inicio,
+        hora_fin: editData.hora_fin,
       };
   
+      // Realiza la solicitud PUT para actualizar la reserva
       const response = await axios.put(
-        `http://localhost:3001/api/reservas/ActReserva/${selectedReservaId}`,  // Asegúrate de que esta URL coincida con tu backend
+        `http://localhost:3001/api/reservas/ActReserva/${selectedReservaId}`,
         editedReserva,
         {
           headers: {
@@ -98,17 +94,42 @@ const AdminPanel = ({ onExit }) => {
         }
       );
   
-      // Actualizar la lista de reservas en el frontend con la reserva editada
+      // Actualiza el estado de `reservas` con la nueva información (sin cambiar usuario_id, espacio_id y email)
       setReservas(reservas.map((reserva) =>
         reserva._id === selectedReservaId ? response.data.reserva : reserva
       ));
+  
+      // Oculta el formulario de edición
       setShowEditForm(false);
       setSelectedReservaId(null);
+  
+      // Llama a cargarReservas para refrescar los datos del panel
+      await cargarReservas(); // Esto asegura que los datos se actualicen completamente después de la edición
     } catch (error) {
       console.error('Error al actualizar la reserva:', error);
       setError('Error al actualizar la reserva.');
     }
   };
+  
+  // Función para cargar reservas desde la base de datos
+  const cargarReservas = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get('http://localhost:3001/api/reservas', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setReservas(response.data); // Actualiza el estado con los datos obtenidos
+    } catch (error) {
+      console.error('Error al cargar reservas:', error);
+      setError('Error al cargar reservas.');
+    }
+  };
+  
+  
+  
+  
   
 
   return (
@@ -158,21 +179,20 @@ const AdminPanel = ({ onExit }) => {
             <label>Fecha Reserva:</label>
             <input
   type="date"
-  value={editData.fecha_reserva.split('T')[0]} // Solo se toma la parte de la fecha
+  value={editData.fecha_reserva}
   onChange={(e) => setEditData({ ...editData, fecha_reserva: e.target.value })}
 />
-
 <input
   type="time"
-  value={editData.hora_inicio.slice(11, 16)} // Extrae solo la hora y minutos
+  value={editData.hora_inicio}
   onChange={(e) => setEditData({ ...editData, hora_inicio: e.target.value })}
 />
-
 <input
   type="time"
-  value={editData.hora_fin.slice(11, 16)} // Extrae solo la hora y minutos
+  value={editData.hora_fin}
   onChange={(e) => setEditData({ ...editData, hora_fin: e.target.value })}
 />
+
 
             <label>Estado:</label>
             <input

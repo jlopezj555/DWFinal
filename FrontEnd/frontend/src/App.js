@@ -3,6 +3,8 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import Login from './components/Login';
 import AdminPanel from './components/AdminPanel';
+import ManageSpaces from './components/ManageSpaces';  // Nuevo componente para gestionar espacios
+
 import './App.css';
 
 const App = () => {
@@ -37,8 +39,6 @@ const App = () => {
 
   return (
     <div className={isAuthenticated ? 'logged-in-background' : 'login-background'}>
-
-
       {/* Mostrar Header solo si el usuario está autenticado */}
       {isAuthenticated && <Header role={role} onLogout={handleLogout} />}
 
@@ -56,6 +56,18 @@ const App = () => {
           element={
             role === 'administrador' ? (
               <AdminPanel onExit={handleExitAdminPanel} />
+            ) : (
+              <h2>No tienes acceso</h2>
+            )
+          }
+        />
+        
+        {/* Ruta para administrar los espacios */}
+        <Route
+          path="/administrar-espacios"
+          element={
+            role === 'administrador' ? (
+              <ManageSpaces />
             ) : (
               <h2>No tienes acceso</h2>
             )
