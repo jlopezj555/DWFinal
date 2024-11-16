@@ -1,9 +1,36 @@
 [{
-  "_id": "ObjectId",
-  "usuario_id": "ID_DEL_USUARIO",
-  "espacio_id": "ID_DEL_ESPACIO",
-  "fecha_reserva": "2024-11-07T00:00:00Z",
-  "hora_inicio": "2024-11-07T10:00:00Z",
-  "hora_fin": "2024-11-07T12:00:00Z",
-  "estado": "confirmada"
+  "_id": {
+    "$oid": "6736a9038902635e73e71d04"
+  },
+  "usuario_id": {
+    "$oid": "672aa7966b8f238d094690b2"
+  },
+  "espacio_id": {
+    "$oid": "6736a486b16460e0e4e918a9"
+  },
+  "fecha_reserva": {
+    "$date": "2024-11-25T00:00:00.000Z"
+  },
+  "hora_inicio": "10:00",
+  "hora_fin": "15:00",
+  "estado": "confirmada",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6736a9e08902635e73e71d0f"
+  },
+  "usuario_id": {
+    "$oid": "672aa7966b8f238d094690b2"
+  },
+  "espacio_id": {
+    "$oid": "6736a486b16460e0e4e918a9"
+  },
+  "fecha_reserva": {
+    "$date": "2024-11-25T10:00:00.000Z"
+  },
+  "hora_inicio": "05:00",
+  "hora_fin": "07:00",
+  "estado": "confirmada",
+  "__v": 0
 }]

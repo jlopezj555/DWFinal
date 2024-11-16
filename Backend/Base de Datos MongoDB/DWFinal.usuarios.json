@@ -1,12 +1,56 @@
 [{
-  "_id": "ObjectId",
-  "nombre": "Juan Pérez",
-  "email": "juan.perez@example.com",
-  "contraseña": "hashedpassword123",
+  "_id": {
+    "$oid": "672aa7856b8f238d094690b0"
+  },
+  "nombre": "admin",
+  "email": "admin@gmail.com",
+  "contraseña": "$2a$10$xaI44Pq4yZD8C.xd3.p.T.UXKJfIXBNWdaqBt.tY6SdgabnT0HDfu",
+  "rol": "administrador",
+  "historial_reservas": [],
+  "fecha_creacion": {
+    "$date": "2024-11-05T23:17:25.691Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672aa7966b8f238d094690b2"
+  },
+  "nombre": "Joel",
+  "email": "joel@gmail.com",
+  "contraseña": "$2a$10$8T7lmTEjs6TGy/SWKVz6.uaVNelGnsWpbO84gXSE0dU35VXDRf/ja",
   "rol": "usuario",
-  "fecha_creacion": "2024-11-05T00:00:00Z",
-  "historial_reservas": [
-    "ID_DE_RESERVA_1",
-    "ID_DE_RESERVA_2"
-  ]
+  "historial_reservas": [],
+  "fecha_creacion": {
+    "$date": "2024-11-05T23:17:42.846Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672ab7e2b438f8d0e514c83a"
+  },
+  "nombre": "anika",
+  "email": "anika@gmail.com",
+  "contraseña": "$2a$10$FQJmwBLvLxQMjzB6kf4vUu6Oi1eihlz.K/uUipiXGWjlPtpMl3QNC",
+  "rol": "usuario",
+  "historial_reservas": [],
+  "fecha_creacion": {
+    "$date": "2024-11-06T00:27:14.774Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6735136a4c57e6441b8624dd"
+  },
+  "nombre": "ola",
+  "email": "ola@gmail.com",
+  "contraseña": "$2a$10$IuGsUWmv0vZchx3BF13MiefMNfl0ZPgdu5LKAYLwV/xPS4zakQBtC",
+  "rol": "usuario",
+  "historial_reservas": [],
+  "fecha_creacion": {
+    "$date": "2024-11-13T21:00:26.920Z"
+  },
+  "__v": 0
 }]

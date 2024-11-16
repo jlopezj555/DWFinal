@@ -1,21 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-//import './ManageSpaces.css';  // Asegúrate de tener los estilos adecuados
+import './ManageSpaces.css'
 
 const ManageSpaces = () => {
-  const [spaces, setSpaces] = useState([]);  // Estado para los espacios
+  const [spaces, setSpaces] = useState([]);
   const [error, setError] = useState('');
-  const [selectedSpaceId, setSelectedSpaceId] = useState(null);  // Para saber qué espacio ha sido seleccionado
-  const [showEditForm, setShowEditForm] = useState(false);  // Para mostrar/ocultar el formulario de edición
+  const [selectedSpaceId, setSelectedSpaceId] = useState(null);
+  const [showEditForm, setShowEditForm] = useState(false);
   const [editData, setEditData] = useState({
     tipo_espacio: '',
     capacidad: '',
     ubicacion: ''
   });
 
+  const spaceImages = {
+    "Oficina": "/images/oficina.jpg",
+    "Sala de Conferencias": "/images/sala.jpg",
+    "Escritorio Individual": "/images/escritorio.png"
+  };
+  
+  
+
   useEffect(() => {
     const token = localStorage.getItem('token');
-
     const fetchSpaces = async () => {
       try {
         const response = await axios.get('http://localhost:3001/api/espacios/ObtEspacios', {
@@ -23,13 +30,12 @@ const ManageSpaces = () => {
             Authorization: `Bearer ${token}`
           }
         });
-        setSpaces(response.data);  // Actualiza el estado con los datos de los espacios
+        setSpaces(response.data);
       } catch (err) {
         setError('Error al cargar los espacios');
         console.error(err);
       }
     };
-
     fetchSpaces();
   }, []);
 
@@ -45,7 +51,7 @@ const ManageSpaces = () => {
           Authorization: `Bearer ${token}`
         }
       });
-      setSpaces(spaces.filter((space) => space._id !== spaceId));  // Elimina el espacio del estado
+      setSpaces(spaces.filter((space) => space._id !== spaceId));
       setSelectedSpaceId(null);
     } catch (error) {
       console.error('Error al eliminar el espacio:', error);
@@ -65,11 +71,7 @@ const ManageSpaces = () => {
   const handleSubmitEdit = async () => {
     try {
       const token = localStorage.getItem('token');
-
-      const editedSpace = {
-        ...editData,
-      };
-
+      const editedSpace = { ...editData };
       const response = await axios.put(
         `http://localhost:3001/api/espacios/ActEspacio/${selectedSpaceId}`,
         editedSpace,
@@ -79,11 +81,9 @@ const ManageSpaces = () => {
           }
         }
       );
-
       setSpaces(spaces.map((space) =>
         space._id === selectedSpaceId ? response.data : space
       ));
-
       setShowEditForm(false);
       setSelectedSpaceId(null);
     } catch (error) {
@@ -96,31 +96,38 @@ const ManageSpaces = () => {
     <div className="manage-spaces-container">
       <h2>Administración de Espacios</h2>
       {error && <p className="error-message">{error}</p>}
-      <br></br><br></br><br></br><br></br>
-      <h3>Espacios Disponibles</h3>
+      <br></br><br></br><br></br><br></br><h3>Espacios Disponibles</h3>
       <ul>
-        {spaces.length > 0 ? (
-          spaces.map((space) => (
-            <li key={space._id} className="space-item">
-              <strong>Tipo de Espacio:</strong> {space.tipo_espacio || 'Tipo no especificado'} <br />
-              <strong>Capacidad:</strong> {space.capacidad || 'No especificada'} <br />
-              <strong>Ubicación:</strong> {space.ubicacion || 'No disponible'} <br />
-              <button onClick={() => toggleActionButtons(space._id)} className="action-toggle-btn">
-                Opciones
-              </button>
+  {spaces.length > 0 ? (
+    spaces.map((space) => (
+      <li key={space._id} className="space-item">
+        {/* Imagen del espacio */}
+        <img
+          src={spaceImages[space.tipo_espacio] || "/images/default.jpg"}
+          alt={space.tipo_espacio}
+          className="space-image"
+        />
+        
+        {/* Detalles del espacio */}
+        <div className="space-details">
+          <strong>Tipo de Espacio:</strong> {space.tipo_espacio || 'Tipo no especificado'} <br />
+          <strong>Capacidad:</strong> {space.capacidad || 'No especificada'} <br />
+          <strong>Ubicación:</strong> {space.ubicacion || 'No disponible'} <br />
+          
+          {/* Botones de acción */}
+          <div className="action-buttons">
+            <button onClick={() => handleEditarSpace(space)} className="modify-btn">Modificar</button>
+            <button onClick={() => handleEliminarSpace(space._id)} className="delete-btn">Eliminar</button>
+          </div>
+        </div>
+      </li>
+    ))
+  ) : (
+    <p>No hay espacios disponibles.</p>
+  )}
+</ul>
 
-              {selectedSpaceId === space._id && (
-                <div className="action-buttons">
-                  <button onClick={() => handleEditarSpace(space)} className="modify-btn">Modificar</button>
-                  <button onClick={() => handleEliminarSpace(space._id)} className="delete-btn">Eliminar</button>
-                </div>
-              )}
-            </li>
-          ))
-        ) : (
-          <p>No hay espacios disponibles.</p>
-        )}
-      </ul>
+
 
       {showEditForm && (
         <div className="modal-overlay">
@@ -146,7 +153,7 @@ const ManageSpaces = () => {
               type="text"
               value={editData.ubicacion}
               onChange={(e) => setEditData({ ...editData, ubicacion: e.target.value })}
-            />
+            />            
             <button onClick={handleSubmitEdit} className="save-btn">Guardar Cambios</button>
             <button onClick={() => setShowEditForm(false)} className="cancel-btn">Cancelar</button>
           </div>
@@ -157,3 +164,4 @@ const ManageSpaces = () => {
 };
 
 export default ManageSpaces;
+

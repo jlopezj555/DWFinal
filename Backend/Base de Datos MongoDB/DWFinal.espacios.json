@@ -1,26 +1,123 @@
 [{
-  "_id": "ObjectId",
+  "_id": {
+    "$oid": "6736a486b16460e0e4e918a9"
+  },
   "tipo_espacio": "Oficina",
-  "capacidad": 5,
-  "ubicacion": "Piso 3, Oficina 301",
+  "capacidad": 15,
+  "ubicacion": "Edificio A, Piso 3",
   "disponibilidad_horaria": [
     {
-      "fecha": "2024-11-06T00:00:00Z",
-      "hora_inicio": "2024-11-06T09:00:00Z",
-      "hora_fin": "2024-11-06T17:00:00Z"
+      "fecha": {
+        "$date": "2024-11-20T00:00:00.000Z"
+      },
+      "hora_inicio": {
+        "$date": "2024-11-20T09:00:00.000Z"
+      },
+      "hora_fin": {
+        "$date": "2024-11-20T12:00:00.000Z"
+      },
+      "_id": {
+        "$oid": "6736a486b16460e0e4e918aa"
+      }
+    },
+    {
+      "fecha": {
+        "$date": "2024-11-21T00:00:00.000Z"
+      },
+      "hora_inicio": {
+        "$date": "2024-11-21T14:00:00.000Z"
+      },
+      "hora_fin": {
+        "$date": "2024-11-21T17:00:00.000Z"
+      },
+      "_id": {
+        "$oid": "6736a486b16460e0e4e918ab"
+      }
     }
   ],
   "reservas": [],
-  "comentarios": [
+  "comentarios": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6736a497b16460e0e4e918ad"
+  },
+  "tipo_espacio": "Escritorio Individual",
+  "capacidad": 1,
+  "ubicacion": "Zona 2 Capitalina",
+  "disponibilidad_horaria": [
     {
-      "usuario_id": "ID_DEL_USUARIO",
-      "texto": "El espacio es muy cómodo y bien iluminado.",
-      "fecha_comentario": "2024-11-05T00:00:00Z"
+      "fecha": {
+        "$date": "2024-11-20T00:00:00.000Z"
+      },
+      "hora_inicio": {
+        "$date": "2024-11-20T09:00:00.000Z"
+      },
+      "hora_fin": {
+        "$date": "2024-11-20T12:00:00.000Z"
+      },
+      "_id": {
+        "$oid": "6736a497b16460e0e4e918ae"
+      }
     },
     {
-      "usuario_id": "ID_DEL_USUARIO_2",
-      "texto": "Me gustaría que hubiera más sillas.",
-      "fecha_comentario": "2024-11-05T00:00:00Z"
+      "fecha": {
+        "$date": "2024-11-21T00:00:00.000Z"
+      },
+      "hora_inicio": {
+        "$date": "2024-11-21T14:00:00.000Z"
+      },
+      "hora_fin": {
+        "$date": "2024-11-21T17:00:00.000Z"
+      },
+      "_id": {
+        "$oid": "6736a497b16460e0e4e918af"
+      }
     }
-  ]
+  ],
+  "reservas": [],
+  "comentarios": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6736ae608902635e73e71d83"
+  },
+  "tipo_espacio": "Sala de Conferencias",
+  "capacidad": 50,
+  "ubicacion": "Edificio B Sala 2",
+  "disponibilidad_horaria": [
+    {
+      "fecha": {
+        "$date": "2024-11-20T00:00:00.000Z"
+      },
+      "hora_inicio": {
+        "$date": "2024-11-20T09:00:00.000Z"
+      },
+      "hora_fin": {
+        "$date": "2024-11-20T12:00:00.000Z"
+      },
+      "_id": {
+        "$oid": "6736ae608902635e73e71d84"
+      }
+    },
+    {
+      "fecha": {
+        "$date": "2024-11-21T00:00:00.000Z"
+      },
+      "hora_inicio": {
+        "$date": "2024-11-21T14:00:00.000Z"
+      },
+      "hora_fin": {
+        "$date": "2024-11-21T17:00:00.000Z"
+      },
+      "_id": {
+        "$oid": "6736ae618902635e73e71d85"
+      }
+    }
+  ],
+  "reservas": [],
+  "comentarios": [],
+  "__v": 0
 }]
