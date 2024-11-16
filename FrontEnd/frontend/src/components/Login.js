@@ -12,26 +12,26 @@ const Login = ({ onLogin }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!isRegister) {
       try {
         const response = await axios.post('http://localhost:3001/api/usuarios/login', {
           email: formData.username,
           contraseña: formData.password,
         });
-
-        // Extrae el nombre, rol y token del usuario desde la respuesta
-        const { nombre, rol, token } = response.data;
-        
+  
+        // Extrae el nombre, rol, token y userId del usuario desde la respuesta
+        const { nombre, rol, token, userId } = response.data;
+  
         // Guarda el token en localStorage para futuras peticiones
         localStorage.setItem('token', token);
-        
+  
         setNombreUsuario(nombre);
         setError('');
-
-        // Llama a onLogin con el rol y el nombre del usuario
-        onLogin(rol, nombre);
-
+  
+        // Llama a onLogin con el rol, el nombre y el userId del usuario
+        onLogin(rol, nombre, userId);
+  
       } catch (error) {
         if (error.response && error.response.status === 404) {
           setError('Usuario/Contraseña incorrecta');
@@ -43,6 +43,7 @@ const Login = ({ onLogin }) => {
       }
     }
   };
+  
 
   return (
     <div className="login-containerL">

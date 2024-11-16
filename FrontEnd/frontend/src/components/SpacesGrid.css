@@ -1,0 +1,45 @@
+.spaces-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .space-item {
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .space-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+  }
+  
+  .space-details {
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .action-buttons {
+    margin-top: 10px;
+  }
+  
+  .reserve-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+  }
+  
+  .reserve-btn:hover {
+    background-color: #218838;
+  }
+  
+  

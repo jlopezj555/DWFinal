@@ -3,7 +3,8 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import Login from './components/Login';
 import AdminPanel from './components/AdminPanel';
-import ManageSpaces from './components/ManageSpaces';  // Nuevo componente para gestionar espacios
+import ManageSpaces from './components/ManageSpaces'; // Nuevo componente para gestionar espacios
+import SpacesGrid from './components/SpacesGrid'; // Nuevo componente para realizar reservas
 
 import './App.css';
 
@@ -11,30 +12,33 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [role, setRole] = useState('');
   const [userName, setUserName] = useState('');
-  const [showWelcomeMessage, setShowWelcomeMessage] = useState(true); // Nuevo estado para controlar la visibilidad del mensaje
+  const [userId, setUserId] = useState(null); // Guardar el ID del usuario
+  const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
 
-  const navigate = useNavigate(); // Para la navegación programática
+  const navigate = useNavigate();
 
-  const handleLogin = (userRole, name) => {
+  const handleLogin = (userRole, name, id) => {
     setIsAuthenticated(true);
     setRole(userRole);
     setUserName(name);
+    setUserId(id); // Establecer el ID del usuario al iniciar sesión
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
     setRole('');
     setUserName('');
+    setUserId(null);
     localStorage.removeItem('token');
     navigate('/'); // Redirige a la pantalla de login después de cerrar sesión
   };
 
   const handleEnterAdminPanel = () => {
-    setShowWelcomeMessage(false); // Oculta el mensaje de bienvenida cuando se accede al AdminPanel
+    setShowWelcomeMessage(false);
   };
 
   const handleExitAdminPanel = () => {
-    setShowWelcomeMessage(true); // Muestra nuevamente el mensaje cuando se regresa al inicio
+    setShowWelcomeMessage(true);
   };
 
   return (
@@ -73,12 +77,19 @@ const App = () => {
             )
           }
         />
+        
+        {/* Ruta para realizar nueva reserva */}
+        <Route
+          path="/realizar-reserva"
+          element={<SpacesGrid userId={userId} />}
+        />
       </Routes>
     </div>
   );
 };
 
 export default App;
+
 
 
 

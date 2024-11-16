@@ -12,19 +12,21 @@ const Header = ({ role, onLogout }) => {
   return (
     <header className="header">
       <div className="center-section">
-        <Link to="/" className="header-option">Realizar Reserva</Link>
+        <Link to="/" className="header-option">Inicio</Link>
 
-        {/* Mostrar Panel de Administración solo para el rol de administrador */}
+        {/* Mostrar opciones específicas según el rol */}
         {role === 'administrador' && (
           <>
             <Link to="/admin" className="header-option">Administrar Reservas</Link>
-            <Link to="/administrar-espacios" className="header-option">Administrar Espacios</Link> {/* Enlace para administrar espacios */}
+            <Link to="/administrar-espacios" className="header-option">Administrar Espacios</Link>
           </>
         )}
 
-        {/* Mostrar historial solo para el rol de usuario */}
         {role === 'usuario' && (
-          <Link to="/historial" className="header-option">Historial de Reservas</Link>
+          <>
+            <Link to="/realizar-reserva" className="header-option">Realizar Nueva Reserva</Link>
+            <Link to="/historial" className="header-option">Historial de Reservas</Link>
+          </>
         )}
       </div>
 
@@ -39,6 +41,7 @@ const Header = ({ role, onLogout }) => {
 };
 
 export default Header;
+
 
 
 

@@ -34,6 +34,7 @@ exports.crearReserva = async (req, res) => {
 };
 
 
+
 // Obtener todas las reservas
 exports.obtenerReservas = async (req, res) => {
   try {
