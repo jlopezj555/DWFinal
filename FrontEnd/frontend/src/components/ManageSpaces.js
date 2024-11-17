@@ -68,6 +68,8 @@ const ManageSpaces = () => {
             Authorization: `Bearer ${token}`
           }
         }
+
+
       );
       setSpaces([...spaces, response.data]);
       setShowAddForm(false);

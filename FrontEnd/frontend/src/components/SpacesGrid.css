@@ -1,45 +1,121 @@
-.spaces-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-  }
-  
-  .space-item {
-    width: 250px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .space-image {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-  }
-  
-  .space-details {
-    padding: 10px;
-    text-align: center;
-  }
-  
-  .action-buttons {
-    margin-top: 10px;
-  }
-  
-  .reserve-btn {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    width: 100%;
-  }
-  
-  .reserve-btn:hover {
-    background-color: #218838;
-  }
-  
+/* Modal para el formulario de reserva (SpacesGrid.js) */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Asegura que el modal esté encima de otros elementos */
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para el modal */
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.close-btn {
+  font-size: 20px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.modal-content label {
+  display: block;
+  margin: 10px 0 5px;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.save-btn {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  padding: 10px 15px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  background-color: #0056b3;
+}
+
+.cancel-btn:hover {
+  background-color: #a71d2a;
+}
+
+button {
+  margin-top: 10px;
+  padding: 8px;
+}
+
+.notification {
+  position: fixed;
+  top: 20px; /* Posición en la parte superior */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #28a745; /* Color de fondo verde para éxito */
+  color: white; /* Texto en blanco */
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Asegura que esté visible sobre otros elementos */
+  font-size: 16px;
+  opacity: 0; /* Inicialmente oculto */
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.notification.show {
+  opacity: 1; /* Hace visible la notificación */
+  transform: translateX(-50%) translateY(0);
+}
+
+.notification.hide {
+  opacity: 0; /* Oculta la notificación */
+  transform: translateX(-50%) translateY(-20px);
+}
+
+
   
