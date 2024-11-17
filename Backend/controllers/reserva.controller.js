@@ -60,12 +60,14 @@ exports.obtenerReservaPorId = async (req, res) => {
 exports.actualizarReserva = async (req, res) => {
   try {
     const { fecha_reserva, hora_inicio, hora_fin, estado } = req.body;
+
+    // Solo convierte `fecha_reserva` a tipo `Date`, mantén `hora_inicio` y `hora_fin` como cadenas
     const reservaActualizada = await Reserva.findByIdAndUpdate(
       req.params.id,
       { 
-        fecha_reserva: new Date(fecha_reserva).toISOString(),
-        hora_inicio: new Date(`1970-01-01T${hora_inicio}`).toISOString(),
-        hora_fin: new Date(`1970-01-01T${hora_fin}`).toISOString(),
+        fecha_reserva: new Date(fecha_reserva),  // Solo convierte fecha_reserva
+        hora_inicio,  // Mantén hora_inicio como cadena
+        hora_fin,     // Mantén hora_fin como cadena
         estado 
       },
       { new: true }
@@ -77,6 +79,7 @@ exports.actualizarReserva = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 
 

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './ManageSpaces.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const ManageSpaces = () => {
   const [spaces, setSpaces] = useState([]);
@@ -35,13 +38,16 @@ const ManageSpaces = () => {
           }
         });
         setSpaces(response.data);
+       // toast.success('Espacios cargados correctamente.');
       } catch (err) {
         setError('Error al cargar los espacios');
+        toast.error('Error al cargar los espacios.');
         console.error(err);
       }
     };
     fetchSpaces();
   }, []);
+  
 
   const handleEliminarSpace = async (spaceId) => {
     try {
@@ -52,10 +58,13 @@ const ManageSpaces = () => {
         }
       });
       setSpaces(spaces.filter((space) => space._id !== spaceId));
+      toast.success('Espacio eliminado correctamente.');
     } catch (error) {
       console.error('Error al eliminar el espacio:', error);
+      toast.error('Error al eliminar el espacio.');
     }
   };
+  
 
   const handleAgregarSpace = async () => {
     try {
@@ -68,8 +77,6 @@ const ManageSpaces = () => {
             Authorization: `Bearer ${token}`
           }
         }
-
-
       );
       setSpaces([...spaces, response.data]);
       setShowAddForm(false);
@@ -78,11 +85,13 @@ const ManageSpaces = () => {
         capacidad: '',
         ubicacion: ''
       });
+      toast.success('Espacio agregado correctamente.');
     } catch (error) {
       console.error('Error al agregar espacio:', error);
-      setError('Error al agregar espacio.');
+      toast.error('Error al agregar el espacio.');
     }
   };
+  
 
   const handleEditarSpace = (space) => {
     setEditData({
@@ -108,14 +117,17 @@ const ManageSpaces = () => {
       );
       setSpaces(spaces.map((space) => (space._id === selectedSpaceId ? response.data : space)));
       setShowEditForm(false);
+      toast.success('Espacio actualizado correctamente.');
     } catch (error) {
       console.error('Error al actualizar el espacio:', error);
-      setError('Error al actualizar el espacio.');
+      toast.error('Error al actualizar el espacio.');
     }
   };
+  
 
   return (
     <div className="manage-spaces-container">
+       <ToastContainer />
       <h2>Administración de Espacios</h2>
       <br></br><br></br><br></br><br></br>
       <h3>Espacios Disponibles</h3>

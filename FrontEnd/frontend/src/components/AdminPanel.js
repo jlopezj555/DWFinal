@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './AdminPanel.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AdminPanel = ({ onExit }) => {
   const [reservas, setReservas] = useState([]);
@@ -18,26 +20,23 @@ const AdminPanel = ({ onExit }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-
-    const fetchReservas = async () => {
-      try {
-        const response = await axios.get('http://localhost:3001/api/reservas/ObtenerReservas', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        setReservas(response.data);
-      } catch (err) {
-        setError('Error al cargar las reservas');
-        console.error(err);
-      }
-    };
-
-    fetchReservas();
+    cargarReservas();
   }, []);
 
-
+  const cargarReservas = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get('http://localhost:3001/api/reservas/ObtenerReservas', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setReservas(response.data);
+    } catch (err) {
+      setError('Error al cargar las reservas');
+      console.error(err);
+    }
+  };
 
   const toggleActionButtons = (reservaId) => {
     setSelectedReservaId(selectedReservaId === reservaId ? null : reservaId);
@@ -53,34 +52,41 @@ const AdminPanel = ({ onExit }) => {
       });
       setReservas(reservas.filter((reserva) => reserva._id !== reservaId));
       setSelectedReservaId(null);
+
+      toast.success('Reserva eliminada con éxito.', {
+        position: 'top-right',
+        autoClose: 3000
+      });
     } catch (error) {
       console.error('Error al eliminar la reserva:', error);
+      toast.error('Error al eliminar la reserva.', {
+        position: 'top-right',
+        autoClose: 3000
+      });
     }
   };
 
   const handleEditarReserva = (reserva) => {
     setEditData({
       fecha_reserva: reserva.fecha_reserva.split('T')[0], // formato YYYY-MM-DD
-      hora_inicio: reserva.hora_inicio.slice(0, 5), // formato HH:mm
-      hora_fin: reserva.hora_fin.slice(0, 5),       // formato HH:mm
-      estado: reserva.estado,
+      hora_inicio: reserva.hora_inicio, // formato HH:mm
+      hora_fin: reserva.hora_fin, // formato HH:mm
+      estado: reserva.estado
     });
     setSelectedReservaId(reserva._id);
     setShowEditForm(true);
   };
-  
 
   const handleSubmitEdit = async () => {
     try {
       const token = localStorage.getItem('token');
   
-      // Crea un objeto `editedReserva` que conserva los valores originales de usuario_id, espacio_id y email
+      // Crea el objeto `editedReserva` con el formato correcto para la base de datos
       const editedReserva = {
         ...editData,
-        // No modificamos usuario_id, espacio_id ni email, ya que queremos que esos valores se mantengan igual
-        fecha_reserva: new Date(editData.fecha_reserva).toISOString(),
-        hora_inicio: editData.hora_inicio,
-        hora_fin: editData.hora_fin,
+        fecha_reserva: editData.fecha_reserva, // Mantén la fecha en formato YYYY-MM-DD
+        hora_inicio: editData.hora_inicio,    // Mantén la hora en formato HH:mm
+        hora_fin: editData.hora_fin,          // Mantén la hora en formato HH:mm
       };
   
       // Realiza la solicitud PUT para actualizar la reserva
@@ -89,67 +95,63 @@ const AdminPanel = ({ onExit }) => {
         editedReserva,
         {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
   
-      // Actualiza el estado de `reservas` con la nueva información (sin cambiar usuario_id, espacio_id y email)
-      setReservas(reservas.map((reserva) =>
-        reserva._id === selectedReservaId ? response.data.reserva : reserva
-      ));
+      // Actualiza el estado local de las reservas con la nueva información
+      setReservas((prevReservas) =>
+        prevReservas.map((reserva) =>
+          reserva._id === selectedReservaId ? response.data.reserva : reserva
+        )
+      );
   
       // Oculta el formulario de edición
       setShowEditForm(false);
       setSelectedReservaId(null);
   
-      // Llama a cargarReservas para refrescar los datos del panel
-      await cargarReservas(); // Esto asegura que los datos se actualicen completamente después de la edición
+      toast.success('Reserva modificada con éxito.', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+  
+      // Recarga las reservas desde la base de datos
+      await cargarReservas();
     } catch (error) {
       console.error('Error al actualizar la reserva:', error);
       setError('Error al actualizar la reserva.');
-    }
-  };
-  
-  // Función para cargar reservas desde la base de datos
-  const cargarReservas = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:3001/api/reservas', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+      toast.error('Error al actualizar la reserva.', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
       });
-      setReservas(response.data); // Actualiza el estado con los datos obtenidos
-    } catch (error) {
-      console.error('Error al cargar reservas:', error);
-      setError('Error al cargar reservas.');
     }
   };
   
-  
-  
-  
-  
-
   return (
     <div className="admin-panel-container">
       <h2>Panel de Administración</h2>
-      <br />
-      <br />
-      <br />
-      <br />
       {error && <p className="error-message">{error}</p>}
-      
+    <br></br><br></br><br></br><br></br>
       <h3>Reservas Realizadas</h3>
       <ul>
         {reservas.length > 0 ? (
           reservas.map((reserva) => (
             <li key={reserva._id} className="reserva-item">
-              <strong>Usuario:</strong> {reserva.usuario_id ? reserva.usuario_id.nombre : 'Usuario desconocido'} <br />
-              <strong>Email:</strong> {reserva.usuario_id ? reserva.usuario_id.email : 'Email no disponible'} <br />
+              <strong>Usuario:</strong> {reserva.usuario_id?.nombre || 'Usuario desconocido'} <br />
+              <strong>Email:</strong> {reserva.usuario_id?.email || 'Email no disponible'} <br />
               <strong>Espacio:</strong> {reserva.espacio_id?.tipo_espacio || 'Espacio no especificado'} <br />
-              <strong>Fecha:</strong> {reserva.fecha_reserva} <br />
+              <strong>Fecha:</strong> {reserva.fecha_reserva.split('T')[0]} <br />
               <strong>Horario:</strong> de {reserva.hora_inicio} a {reserva.hora_fin}
               <br />
               <button onClick={() => toggleActionButtons(reserva._id)} className="action-toggle-btn">
@@ -172,28 +174,25 @@ const AdminPanel = ({ onExit }) => {
       {showEditForm && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <div className="modal-header">
-              <h3>Editar Reserva</h3>
-              <button onClick={() => setShowEditForm(false)} className="close-btn">&times;</button>
-            </div>
+            <h3>Editar Reserva</h3>
             <label>Fecha Reserva:</label>
             <input
-  type="date"
-  value={editData.fecha_reserva}
-  onChange={(e) => setEditData({ ...editData, fecha_reserva: e.target.value })}
-/>
-<input
-  type="time"
-  value={editData.hora_inicio}
-  onChange={(e) => setEditData({ ...editData, hora_inicio: e.target.value })}
-/>
-<input
-  type="time"
-  value={editData.hora_fin}
-  onChange={(e) => setEditData({ ...editData, hora_fin: e.target.value })}
-/>
-
-
+              type="date"
+              value={editData.fecha_reserva}
+              onChange={(e) => setEditData({ ...editData, fecha_reserva: e.target.value })}
+            />
+            <label>Hora Inicio:</label>
+            <input
+              type="time"
+              value={editData.hora_inicio}
+              onChange={(e) => setEditData({ ...editData, hora_inicio: e.target.value })}
+            />
+            <label>Hora Fin:</label>
+            <input
+              type="time"
+              value={editData.hora_fin}
+              onChange={(e) => setEditData({ ...editData, hora_fin: e.target.value })}
+            />
             <label>Estado:</label>
             <input
               type="text"
@@ -205,11 +204,15 @@ const AdminPanel = ({ onExit }) => {
           </div>
         </div>
       )}
+
+      <ToastContainer />
     </div>
   );
 };
 
 export default AdminPanel;
+
+
 
 
 
