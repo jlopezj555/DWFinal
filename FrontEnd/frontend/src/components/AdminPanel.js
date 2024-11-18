@@ -122,7 +122,8 @@ const AdminPanel = ({ onExit }) => {
       });
   
       // Recarga las reservas desde la base de datos
-      await cargarReservas();
+      
+      
     } catch (error) {
       console.error('Error al actualizar la reserva:', error);
       setError('Error al actualizar la reserva.');

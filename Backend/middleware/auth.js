@@ -4,7 +4,7 @@ const SECRET_KEY = 'mysecretkey';
 
 
 const authMiddleware = (req, res, next) => {
-  const token = req.header('Authorization')?.replace('Bearer ', '');
+  const token = req.header('Authorization')?.replace('Bearer ', ''); // Obtener el token de las cabeceras
 
   if (!token) {
     return res.status(401).json({ mensaje: 'Token no proporcionado' });
@@ -12,12 +12,13 @@ const authMiddleware = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, SECRET_KEY);
-    req.user = decoded; // guarda la información del usuario en la petición
-    next();
+    req.user = decoded; // Guarda la información del usuario en la petición
+    next(); // Pasa al siguiente middleware o ruta
   } catch (err) {
     res.status(401).json({ mensaje: 'Token inválido' });
   }
 };
+
 
   
   const adminMiddleware = (req, res, next) => {

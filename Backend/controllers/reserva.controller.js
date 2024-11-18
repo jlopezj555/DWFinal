@@ -34,6 +34,79 @@ exports.crearReserva = async (req, res) => {
 };
 
 
+// Obtener el historial de reservas de un usuario
+exports.obtenerHistorialReservas = async (req, res) => {
+  try {
+    const usuarioId = req.user.id; // Obtén el ID del usuario autenticado desde el token
+    
+    // Buscar las reservas del usuario, asociadas a su ID
+    const reservas = await Reserva.find({ usuario_id: usuarioId })
+      .populate('espacio_id', 'tipo_espacio ubicacion') // Agregar detalles del espacio
+      .sort({ fecha_reserva: -1 }); // Orden descendente por fecha de reserva
+
+    // Validar si no hay reservas
+    if (!reservas.length) {
+      return res.status(404).json({ mensaje: 'No tienes reservas en el historial.' });
+    }
+
+    // Devolver las reservas al cliente
+    res.status(200).json(reservas);
+  } catch (error) {
+    console.error('Error obteniendo historial:', error.message);
+    res.status(500).json({ mensaje: 'Error al obtener el historial de reservas.', error: error.message });
+  }
+};
+
+// Modificar el horario de una reserva
+exports.modificarHorarioReserva = async (req, res) => {
+  try {
+    const { hora_inicio, hora_fin } = req.body;
+
+    // Actualizar los horarios de la reserva
+    const reservaActualizada = await Reserva.findByIdAndUpdate(
+      req.params.id,
+      { hora_inicio, hora_fin },
+      { new: true }
+    );
+
+    if (!reservaActualizada) {
+      return res.status(404).json({ message: 'Reserva no encontrada' });
+    }
+
+    res.json({
+      message: 'Horario de la reserva actualizado correctamente',
+      reserva: reservaActualizada
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+// Cancelar una reserva
+exports.cancelarReserva = async (req, res) => {
+  try {
+    const reservaCancelada = await Reserva.findByIdAndUpdate(
+      req.params.id,
+      { estado: 'cancelada' },
+      { new: true }
+    );
+
+    if (!reservaCancelada) {
+      return res.status(404).json({ message: 'Reserva no encontrada' });
+    }
+
+    res.json({
+      message: 'Reserva cancelada correctamente',
+      reserva: reservaCancelada
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+
 
 // Obtener todas las reservas
 exports.obtenerReservas = async (req, res) => {

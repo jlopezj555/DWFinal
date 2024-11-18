@@ -5,6 +5,7 @@ import Login from './components/Login';
 import AdminPanel from './components/AdminPanel';
 import ManageSpaces from './components/ManageSpaces'; // Nuevo componente para gestionar espacios
 import SpacesGrid from './components/SpacesGrid'; // Nuevo componente para realizar reservas
+import Historial from './components/Historial';
 
 import './App.css';
 
@@ -82,6 +83,10 @@ const App = () => {
         <Route
           path="/realizar-reserva"
           element={<SpacesGrid userId={userId} />}
+        />
+        <Route
+          path="/historial"
+          element={<Historial userId={userId} />}
         />
       </Routes>
     </div>

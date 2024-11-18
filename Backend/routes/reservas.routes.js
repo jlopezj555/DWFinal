@@ -6,6 +6,15 @@ const { authMiddleware, adminMiddleware } = require('../middleware/auth');
 // Crear una nueva reserva
 router.post('/CrearReserva', authMiddleware, reservaController.crearReserva);
 
+router.get('/Historial', authMiddleware, reservaController.obtenerHistorialReservas);
+
+// Modificar horario de una reserva
+router.put('/ModificarHorario/:id', authMiddleware, reservaController.modificarHorarioReserva);
+
+// Cancelar una reserva
+router.put('/CancelarReserva/:id', authMiddleware, reservaController.cancelarReserva);
+
+
 // Obtener todas las reservas
 router.get('/ObtenerReservas',  authMiddleware, adminMiddleware, reservaController.obtenerReservas);
 
