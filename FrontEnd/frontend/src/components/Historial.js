@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Historial.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Historial = () => {
   const [reservas, setReservas] = useState([]);
@@ -12,22 +14,24 @@ const Historial = () => {
   // Función para obtener el historial de reservas
   const obtenerHistorial = async () => {
     const token = localStorage.getItem('token');
-
+  
     if (!token) {
       setMensaje('No has iniciado sesión.');
       setCargando(false);
       return;
     }
-
+  
     try {
       const response = await axios.get('http://localhost:3001/api/reservas/Historial', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
+  
+      console.log('Datos actualizados:', response.data); // Verifica si la API devuelve los datos correctos
+  
       if (response.data && Array.isArray(response.data)) {
-        setReservas(response.data);
+        setReservas(response.data); // Actualiza el estado de reservas
       } else {
         setMensaje('No tienes reservas en el historial.');
       }
@@ -38,27 +42,27 @@ const Historial = () => {
       setCargando(false);
     }
   };
+  
 
   useEffect(() => {
-    obtenerHistorial(); // Solo ejecuta esto al cargar el componente
-  }, []); // Solo ejecuta una vez cuando el componente se monta
+    obtenerHistorial();
+  console.log('Reservas actualizadas:', reservas);
+}, [reservas]);
 
   const modificarReserva = (idReserva) => {
     const reserva = reservas.find((reserva) => reserva._id === idReserva);
-    setReservaSeleccionada(reserva);  // Guarda la reserva seleccionada
-    setModalOpen(true);  // Abre el modal para modificar
   
-    // Actualiza el estado inmediatamente al modificar el horario
-    setReservas((prevReservas) =>
-      prevReservas.map((reserva) =>
-        reserva._id === idReserva
-          ? { ...reserva, hora_inicio: reservaSeleccionada.hora_inicio, hora_fin: reservaSeleccionada.hora_fin }
-          : reserva
-      )
-    );
+    if (!reserva) {
+      setMensaje('Reserva no encontrada.');
+      return;
+    }
+  
+    setReservaSeleccionada(reserva);
+    setModalOpen(true);
   };
   
-  const guardarModificaciones = async () => {
+ 
+const guardarModificaciones = async () => {
     if (!reservaSeleccionada) return;
   
     const token = localStorage.getItem('token');
@@ -77,25 +81,38 @@ const Historial = () => {
       );
   
       if (response.data.success) {
-        // Actualiza el estado local con la respuesta de la API si es exitosa
-        setReservas((prevReservas) =>
-          prevReservas.map((reserva) =>
-            reserva._id === reservaSeleccionada._id
-              ? { ...reserva, hora_inicio: reservaSeleccionada.hora_inicio, hora_fin: reservaSeleccionada.hora_fin }
-              : reserva
-          )
-        );
-        setModalOpen(false);  // Cierra el modal
+        // Notificación de éxito
+
+  
+        // Actualiza el historial y cierra el modal
+        await obtenerHistorial();
+        setModalOpen(false);
+        setMensaje('');
       } else {
-        setMensaje('Error al modificar la reserva.');
+        // Notificación de error
+        //toast.error('Error al modificar la reserva.');
       }
+      toast.success('Horario modificado exitosamente.');
     } catch (error) {
-      setMensaje('Error al modificar la reserva: ' + (error.response?.data?.mensaje || error.message));
+      // Notificación de error
+      toast.error('Error al modificar la reserva: ' + (error.response?.data?.mensaje || error.message));
       console.error('Error al modificar la reserva:', error);
     }
   };
   
+  
+  
+  
+  
+  
   const cancelarReserva = async (idReserva) => {
+    // Optimistic UI: actualizamos el estado inmediatamente
+    setReservas((prevReservas) =>
+      prevReservas.map((reserva) =>
+        reserva._id === idReserva ? { ...reserva, estado: 'cancelada' } : reserva
+      )
+    );
+  
     try {
       const token = localStorage.getItem('token');
       if (!token) {
@@ -114,20 +131,19 @@ const Historial = () => {
       );
   
       if (response.data.success) {
-        // Actualiza el estado local inmediatamente
-        setReservas((prevReservas) =>
-          prevReservas.map((reserva) =>
-            reserva._id === idReserva ? { ...reserva, estado: 'cancelada' } : reserva
-          )
-        );
+        // Si la respuesta de la API es exitosa, mantenemos el estado optimista.
+        // La UI ya se actualizó, por lo que no es necesario hacer nada adicional.
       } else {
-        setMensaje('Error al cancelar la reserva.');
+       // setMensaje('Error al cancelar la reserva.');
       }
+      toast.success('Reserva Cancelada.');
     } catch (error) {
-      setMensaje('Error al cancelar la reserva: ' + (error.response?.data?.mensaje || error.message));
+      //setMensaje('Error al cancelar la reserva: ' + (error.response?.data?.mensaje || error.message));
       console.error('Error al cancelar la reserva:', error);
     }
   };
+  
+  
   
 
   return (
@@ -169,7 +185,6 @@ const Historial = () => {
         </>
       )}
 
-      <button className="back-to-home-btn" onClick={() => window.location.href = '/'}>Volver al Inicio</button>
 
       {/* Modal para modificar la reserva */}
       {modalOpen && reservaSeleccionada && (
@@ -198,11 +213,12 @@ const Historial = () => {
             </label>
             <div>
               <button onClick={guardarModificaciones}>Guardar Cambios</button>
-              <button onClick={() => setModalOpen(false)}>Cerrar</button>
+              <button onClick={() => setModalOpen(false)} className="delete-btn">Cerrar </button>
             </div>
           </div>
         </div>
       )}
+            <ToastContainer />
     </div>
   );
 };
